@@ -1,13 +1,14 @@
-#include <iostream>
+﻿#include <iostream>
+#include <stdio.h>
 #include <string>
 #include <vector>
+#include <stdlib.h>
 using namespace std;
 
-//z = (x*y - 1)*(x*y + 1)
+//z = (xy - 1)*(x*y + 1.35)
 
 int main() {
-	cout << endl;
-	cout << "Please, enter the expression: ";
+	cout << "Enter expression:" << endl;
 	char s;
 	vector <char> read;
 	while (cin.get(s)) {
@@ -16,52 +17,84 @@ int main() {
 		else
 			read.push_back(s);
 	}
-	cout << endl;
-	vector<char> table;
+	string temp = "";
+	vector <string> table;
 	bool f = true;
-	for (int i = 0; i < read.size(); i++) {
-		if (read[i] != '+' && read[i] != '-' && read[i] != '*' && read[i] != '/' && read[i] != '^' && read[i] != '=' && read[i] != ' ' && read[i] != '\n' && read[i] != '(' && read[i] != ')') {
-			if (table.size() != 0)
-				for (int j = 0; j < table.size(); j++)
-					if (read[i] == table[j])
+	for (int i = 0; i <= read.size(); i++) {
+		if (i == read.size()) {
+			if (temp != "") {
+				for (int j = 0; j < table.size(); j++) {
+					if (table[j] == temp) {
 						f = false;
-			if (f)
-				table.push_back(read[i]);
-			f = true;
-		}
-	}
-	f = true;
-	int p;
-	char c;
-	string out;
-	for (int i = 0; i < read.size(); i++) {
-		for (int j = 0; j < table.size(); j++)
-			if (read[i] == table[j]) {
-				f = false;
-				p = j;
+						temp = "";
+					}
+				}
 			}
-		if (f)
-			out += read[i];
-		else {
-			c = p + 48;
-			out += "<id";
-			out += c;
-			out += ">";
+			break;
 		}
-		f = true;
+		if (read[i] != '+' && read[i] != '-' && read[i] != '*' && read[i] != '/' && read[i] != '^' && read[i] != '=' && read[i] != ' ' && read[i] != '\n' && read[i] != '(' && read[i] != ')') {
+			temp += read[i];
+		}
+		else {
+			if (temp != "") {
+				if (table.size() != 0)
+					for (int j = 0; j < table.size(); j++) {
+						if (table[j] == temp) {
+							f = false;
+							temp = "";
+							break;
+						}
+					}
+				if (f) {
+					table.push_back(temp);
+					temp = "";
+				}
+				f = true;
+			}
+		}
 	}
-	cout << out << endl;
+
+	string id = "";
+	for (int i = 0; i <= read.size(); i++) {
+		if (i == read.size()) {
+			if (temp != "") {
+				if (table.size() != 0)
+					for (int j = 0; j < table.size(); j++)
+						if (table[j] == temp) {
+							char tmp = j + 48;
+							id += "id";
+							id += tmp;
+							temp = "";
+						}
+			}
+			break;
+		}
+		if (read[i] != '+' && read[i] != '-' && read[i] != '*' && read[i] != '/' && read[i] != '^' && read[i] != '=' && read[i] != ' ' && read[i] != '\n' && read[i] != '(' && read[i] != ')') {
+			temp += read[i];
+		}
+		else {
+			if (temp != "")
+				if (table.size() != 0)
+					for (int j = 0; j < table.size(); j++)
+						if (table[j] == temp) {
+							char tmp = j + 48;
+							id += "id";
+							id += tmp;
+							temp = "";
+						}
+			id += read[i];
+		}
+	}
 	cout << endl;
-	cout << "-----------------------------------------\n";
-	cout << "| ID | LEXEME | TYPE                    |" << endl;
+	cout << id << endl;
+	cout << endl;
+	cout << " ID - LEXEME - TYPE" << endl;
 	for (int i = 0; i < table.size(); i++) {
-		cout << "-----------------------------------------\n";
-		if (table[i] >= 48 && table[i] <= 57)
-			cout << "| " << i << "  | " << table[i] << "      | " << "Integer constant        |\n";
+		if (isdigit(table[i][0]))
+			cout << " " << i << " - " << table[i] << " - " << "Numeric constant\n";
 		else
-			cout << "| " << i << "  | " << table[i] << "      | " << "Floating point variable |\n";
+			cout << " " << i << " - " << table[i] << " - " << "Floating point variable\n";
 	}
-	cout << "-----------------------------------------\n";
 	cout << endl;
 	system("pause");
 	return 0;
