@@ -45,10 +45,16 @@ using namespace std;
 //	{
 //#pragma omp single nowait
 //		{
-//			cout << "Start" << " - Thread is " << omp_get_thread_num() << endl;
-//			cout << "One thread" << " - Thread is " << omp_get_thread_num() << endl;
-//			cout << "End" << " - Thread is " << omp_get_thread_num() << endl;
-//		}	
+//			printf("Start - Thread is %d\n", omp_get_thread_num());
+//		}
+//#pragma omp single nowait
+//		{
+//			printf("One thread - Thread is %d\n", omp_get_thread_num());
+//		}
+//#pragma omp single nowait
+//		{
+//			printf("End - Thread is %d\n", omp_get_thread_num());
+//		}
 //	}
 //}
 
@@ -76,16 +82,16 @@ using namespace std;
 
 //int main() {
 //	int n = 10;
-//	printf("Serial area %d\n", n);
+//	printf("Serial area %d thread is %d\n", n, omp_get_thread_num());
 //#pragma omp parallel firstprivate (n)
 //	{
-//		printf("Parallel area %d\n", n);
+//		printf("Parallel area %d thread is %d\n", n, omp_get_thread_num());
 //#pragma omp barrier
 //		{}
 //		n = omp_get_thread_num();
-//		printf("Parallel area %d\n", n);
+//		printf("Parallel area %d thread is %d\n", n, omp_get_thread_num());
 //	}
-//	printf("Serial area %d\n", n);
+//	printf("Serial area %d thread is %d\n", n, omp_get_thread_num());
 //}
 
 //int main() {
