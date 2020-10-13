@@ -52,13 +52,12 @@ using namespace std;
 //}
 
 //int main() {
-//	int NumOfThreads;	
 //#pragma omp parallel
 //{
-//		NumOfThreads = omp_get_num_threads();
+//#pragma omp master
+//		printf("Number of threads %d\n", omp_get_num_threads());
 //		printf("Thread is %d\n", omp_get_thread_num());
 //}
-//	printf("Num of threads %d\n", NumOfThreads);
 //	return 0;
 //}
 
@@ -83,26 +82,26 @@ using namespace std;
 //	}
 //}
 
-//int main() {
-//	int NumOfThreads;
-//	omp_set_dynamic(1); //1 on 0 off
-//#pragma omp parallel num_threads(128)
-//	{
-//		NumOfThreads = omp_get_num_threads();
-//	}
-//	printf("Num of threads %d\n", NumOfThreads);
-//}
-
 int main() {
-	string par;
-	std::cin >> par;
-	if (par == "parallel") {
-#pragma omp parallel
-		{
-			printf("Thread is %d\n", omp_get_thread_num());
-		}
+	omp_set_dynamic(1); //1 on 0 off
+#pragma omp parallel num_threads(128)
+	{
+#pragma omp master
+		printf("Number of threads %d\n", omp_get_num_threads());
 	}
-	if (par == "serial") {
-		cout << "Its serial";
-	}
+	return 0;
 }
+
+//int main() {
+//	string par;
+//	std::cin >> par;
+//	if (par == "parallel") {
+//#pragma omp parallel
+//		{
+//			printf("Thread is %d\n", omp_get_thread_num());
+//		}
+//	}
+//	if (par == "serial") {
+//		cout << "Its serial";
+//	}
+//}

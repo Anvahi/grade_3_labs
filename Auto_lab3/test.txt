@@ -3,5 +3,8 @@ a = 1 + b;
 while (b);
 
 do
-3ad := 6.23 - 4ds + 432;
-while (3ad <= 432)
+3ad := 4ds + 432;
+while (3ad <= 434.3)
+
+while (i:=0)
+4fd
