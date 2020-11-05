@@ -8,8 +8,7 @@ namespace NET_lab4_classes  {
     /// <summary>
     /// Класс типы кредитов
     /// </summary>
-    public class Types_of_Credits : IValidatable
-    {
+    public class Types_of_Credits : IValidatable {
         /// <summary>
         /// Название кредита
         /// </summary>
@@ -27,10 +26,8 @@ namespace NET_lab4_classes  {
         /// </summary>
         public DateTime Date { get; set; } = DateTime.Today;
 
-        public bool IsValid
-        {
-            get
-            {
+        public bool IsValid {
+            get {
                 if (String.IsNullOrWhiteSpace(name))
                     return false;
                 if (String.IsNullOrWhiteSpace(terms))
@@ -43,21 +40,16 @@ namespace NET_lab4_classes  {
             }
         }
 
-        public Types_of_Credits()
-        {
+        public Types_of_Credits() { }
 
-        }
-
-        public Types_of_Credits(string _name, string _terms, double _credit_rate, DateTime _Date)
-        {
+        public Types_of_Credits(string _name, string _terms, double _credit_rate, DateTime _Date) {
             this.name = _name;
             this.terms = _terms;
             this.credit_rate = _credit_rate;
             this.Date = _Date;
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return $"Название: { name }\r\nУсловия получения: { terms }\r\nПроцентная ставка: { credit_rate }\r\nСрок: { Date }\r\n" ;
         }
     }
@@ -88,8 +80,7 @@ namespace NET_lab4_classes  {
 
         public Clients() { }
 
-        public Clients (string _Name, string _property, string _adress, string _phone, string _contact_person)
-        {
+        public Clients (string _Name, string _property, string _adress, string _phone, string _contact_person) {
             this.Name = _Name;
             this.property_type = _property;
             this.adress = _adress;
@@ -97,10 +88,8 @@ namespace NET_lab4_classes  {
             this.contact_person = _contact_person;
         }
 
-        public bool IsValid
-        {
-            get
-            {
+        public bool IsValid {
+            get {
                 if (String.IsNullOrWhiteSpace(Name))
                     return false;
                 if (String.IsNullOrWhiteSpace(property_type))
@@ -115,13 +104,12 @@ namespace NET_lab4_classes  {
             }
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return $"Название: { Name }\r\nВид собственности: { property_type }\r\nАдрес: { adress }\r\nТелефон: { phone }\r\n Контактное лицо: {contact_person}";
         }
     }
     /// <summary>
-    /// класс клиент
+    /// класс кредиты
     /// </summary>
     public class Credits
     {
@@ -142,23 +130,17 @@ namespace NET_lab4_classes  {
         /// </summary>
         public DateTime date { get; set; } = DateTime.Today;
 
-        public Credits()
-        {
+        public Credits() { }
 
-        }
-
-        public Credits(Types_of_Credits _name, Clients _client, double _sum, DateTime _date)
-        {
+        public Credits(Types_of_Credits _name, Clients _client, double _sum, DateTime _date) {
             this.name = _name;
             this.client = _client;
             this.sum = _sum;
             this.date = _date;
         }
 
-        public bool IsValid
-        {
-            get
-            {
+        public bool IsValid {
+            get {
                 if (name == null)
                     return false;
                 if (client == null)
@@ -171,8 +153,7 @@ namespace NET_lab4_classes  {
             }
         }
 
-        public override string ToString()
-        {
+        public override string ToString() {
             return $"Название: { name }\r\nКлиент: { client }\r\nСумма: { sum }\r\nДата выдачи: { date }\r\n";
         }
     }
