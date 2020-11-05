@@ -97,6 +97,68 @@ vector <string> table_id(string reread) {
 	return table;
 }
 
+int HashFunction(string a) {
+	int temp = 0;
+	for (int i = 0; i < a.length(); i++)
+		temp += a[i] * (i + 1);
+	return temp%256;
+}
+
+int HashTable(string *hash_table, vector <string> table) {
+	bool overtable = false;
+	for (int i = 0; i < table.size(); i++) {
+		int temp = HashFunction(table[i]);
+		if (hash_table[temp] == "")
+			hash_table[temp] = table[i];
+		else {
+			while (hash_table[temp] != "") {
+				if (temp == HashTableNumber && overtable) {
+					cout << endl << "Error! Hash table is over!" << endl;
+					break;
+				}
+				if (temp == HashTableNumber) {
+					overtable = true;
+					temp = 0;
+					continue;
+				}
+				temp++;
+			}
+			hash_table[temp] = table[i];
+		}
+	}
+	return 1;
+}
+
+void Search(string *hash_table, string s) {
+	bool overtable = false;
+	int temp = HashFunction(s);	
+	if (hash_table[temp] == s)
+		cout << endl << " " << temp << " - " << s << endl;
+	else
+		while(hash_table[temp] != s || hash_table[temp] != "") {
+			if (temp != HashTableNumber)
+				temp++;
+			else if (!overtable) {
+				overtable = true;
+				temp = 0;
+			}
+			else if (overtable) {
+				cout << endl << "Element is not find!" << endl;
+				break;
+			}		
+			if (hash_table[temp] == s)
+				cout << endl << " " << temp << " - " << s << endl;
+		}
+}
+
+void OutputHashTable(string *hash_table) {
+	for (int i = 0; i < HashTableNumber; i++) {
+		if (hash_table[i] == "")
+			continue;
+		cout << " " << i << " - " << hash_table[i] << endl;
+	}
+}
+
 string _id(string reread, vector <string> table) {
 	string id = "";
 	bool key = false;
