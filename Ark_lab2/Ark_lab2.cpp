@@ -39,19 +39,19 @@ using namespace std;
 //	cout << "Parallel time: " << t1 << endl;
 //}
 
-int main() {
-	omp_set_num_threads(3);
-#pragma omp parallel
-	{
-			printf("Start - Thread is %d\n", omp_get_thread_num());
-#pragma omp barrier
-			{}
-			printf("One thread - Thread is %d\n", omp_get_thread_num());
-#pragma omp barrier
-			{}
-			printf("End - Thread is %d\n", omp_get_thread_num());
-	}
-}
+//int main() {
+//	omp_set_num_threads(3);
+//#pragma omp parallel
+//	{
+//			printf("Start - Thread is %d\n", omp_get_thread_num());
+//#pragma omp barrier
+//			{}
+//			printf("One thread - Thread is %d\n", omp_get_thread_num());
+//#pragma omp barrier
+//			{}
+//			printf("End - Thread is %d\n", omp_get_thread_num());
+//	}
+//}
 
 //int main() {
 //	omp_set_num_threads(3);
@@ -115,13 +115,13 @@ int main() {
 //	printf("Num of threads = %d\n", f);
 //}
 
-//int main() {
-//	int f = 0;
-//	omp_set_num_threads(4);
-//#pragma omp parallel reduction(+:f)
-//	{
-//		f = omp_get_thread_num();
-//		printf("Thread number %d reduction %d\n", omp_get_thread_num(), f);
-//	}
-//	printf("Num of threads = %d\n", f);
-//}
+int main() {
+	int f = 0;
+	omp_set_num_threads(4);
+#pragma omp parallel reduction(+:f)
+	{
+		f = omp_get_thread_num();
+		printf("thread number %d reduction %d\n", omp_get_thread_num(), f);
+	}
+	printf("num of threads = %d\n", f);
+}
