@@ -21,7 +21,7 @@ string spacing(string read) {
 		if (read[i] == '=' && read[i - 1] != ':' && read[i - 1] != '>' && read[i - 1] != '<') {
 			if (read[i - 1] != ' ')
 				reread += " ";
-			reread += read[i];
+			reread += read[i]; 
 			if (read[i + 1] != ' ')
 				reread += " ";
 			rer = true;
@@ -95,6 +95,194 @@ vector <string> table_id(string reread) {
 		}
 	}
 	return table;
+}
+
+vector <string> table_error(string reread) {
+	string temp = "";
+	vector <string> table;
+	bool f = true;
+	for (int i = 0; i <= reread.size(); i++) {
+		if (i == reread.size()) {
+			if (temp != "") {
+				table.push_back(temp);
+				temp = "";
+			}
+			break;
+		}
+		if (reread[i] != '+' && reread[i] != '-' && reread[i] != '*' && reread[i] != '/' && reread[i] != '^' && reread[i] != ' ' && reread[i] != '\n' && reread[i] != '(' && reread[i] != ')' && reread[i] != ';' && reread[i] != '\r')
+			temp += reread[i];
+		else {
+			if (temp != "") {
+				table.push_back(temp);
+				temp = "";
+			}
+			if (reread[i] == '(' || reread[i] == ')' || reread[i] == ';') {
+				temp = reread[i];
+				table.push_back(temp);
+				temp = "";
+			}
+		}
+	}
+	return table;
+}
+
+void error_(string read, vector <string> table) {
+	bool edo = false;
+	bool ewhile = false;
+	bool eerror = false;
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "do") {
+			if (edo) {
+				eerror = true;
+				break;
+			}
+			edo = true;
+			continue;
+		}
+		if (table[i] == "while")
+			ewhile = true;
+		if (i == table.size() - 1 && !ewhile)
+			eerror = true;
+	}
+	if (eerror)
+		cout << endl << "SYNTAX MISTAKE_!" << endl;
+}
+
+void errorw(string read) {
+	bool f = false;
+	vector <string> table = table_error(read);
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "do") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == "while") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << endl << "SYNTAX MISTAKE WHILE!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
+	table = table_error(read);
+	bool esemicolon = false;
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "do") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == ";")
+					esemicolon = true;
+				if (table[j] == "while" && !esemicolon)
+					cout << endl << "SYNTAX MISTAKE SEMICOLON!" << endl;
+			}
+		}
+	}
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "while") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == "(") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << endl << "SYNTAX MISTAKE LEFT BRACKET!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
+	table = table_error(read);
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "(") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == ")") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << endl << "SYNTAX MISTAKE RIGHT BRACKET!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
+}
+
+void errorf(string read) {
+	bool f = false;
+	vector <string> table = table_error(read);
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "for") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == "do") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << "Error. Expected do!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
+	table = table_error(read);
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "for") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == "(") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << endl << "Error. Expected left bracket!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
+	table = table_error(read);
+	int count_semicolon = 0;
+	f = false;
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "(") {
+			f = true;
+			if (table[i] == ")")
+				break;
+		}
+		if (table[i] == ";" && f)
+			count_semicolon++;
+	}
+	if (count_semicolon != 2) {
+		cout << endl << "Error. Expected semicolon!" << endl;
+	}
+	table = table_error(read);
+	f = false;
+	for (int i = 0; i < table.size(); i++) {
+		if (table[i] == "(") {
+			for (int j = i; j < table.size(); j++) {
+				if (table[j] == ")") {
+					f = true;
+					table[j] = "";
+					break;
+				}
+			}
+			if (!f) {
+				cout << endl << "Error. Expected right bracket!" << endl;
+				break;
+			}
+			f = false;
+		}
+	}
 }
 
 int HashFunction(string a) {
