@@ -126,26 +126,28 @@ vector <string> table_error(string reread) {
 	return table;
 }
 
-void error_(string read, vector <string> table) {
-	bool edo = false;
-	bool ewhile = false;
-	bool eerror = false;
-	for (int i = 0; i < table.size(); i++) {
-		if (table[i] == "do") {
-			if (edo) {
-				eerror = true;
-				break;
+vector <string> table_tree(string reread) {
+	string temp = "";
+	vector <string> table;
+	bool f = true;
+	for (int i = 0; i <= reread.size(); i++) {
+		if (i == reread.size()) {
+			if (temp != "") {
+				table.push_back(temp);
+				temp = "";
 			}
-			edo = true;
-			continue;
+			break;
 		}
-		if (table[i] == "while")
-			ewhile = true;
-		if (i == table.size() - 1 && !ewhile)
-			eerror = true;
+		if (reread[i] != ' ' && reread[i] != '\n' && reread[i] != '(' && reread[i] != ')' && reread[i] != ';' && reread[i] != '\r')
+			temp += reread[i];
+		else {
+			if (temp != "") {
+				table.push_back(temp);
+				temp = "";
+			}
+		}
 	}
-	if (eerror)
-		cout << endl << "SYNTAX MISTAKE_!" << endl;
+	return table;
 }
 
 void errorw(string read) {
